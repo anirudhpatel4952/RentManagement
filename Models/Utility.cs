@@ -9,28 +9,33 @@ namespace rentManagement.Models
     public class Utility
     {
         //Data members
-        private double _propertyTax;
-        private double _waterBill;
-        private double _powerBill;
-        private double _internetBill;
+        private double baseCost;
+        private double waterBill;
+        private double powerBill;
+        private double internetBill;
 
         //constructor - rent will include all this service
-        public Utility(double propertyTax, double waterBill, double powerBill, double internetBill)
+        public Utility()
         {
-            _propertyTax = propertyTax;
-            _waterBill = waterBill;
-            _powerBill = powerBill;
-            _internetBill = internetBill;
+            BaseCost = 600;
+            WaterBill = 100;
+            PowerBill = 100;
+            InternetBill = 100;
         }
-        public Utility(double propertyTax, double waterBill)
-        {
-            _propertyTax = propertyTax;
-            _waterBill = waterBill;
-        }
+        
         //Properties or access func
-        public double PropertyTax { get => _propertyTax; set => _propertyTax = value; }
-        public double WaterBill { get => _waterBill; set => _waterBill = value; }
-        public double PowerBill { get => _powerBill; set => _powerBill = value; }
-        public double InternetBill { get => _internetBill; set => _internetBill = value; }
+        public double BaseCost { get; private set; }
+        public double WaterBill { get; private set; }
+        public double PowerBill { get; private set; }
+        public double InternetBill { get; private set; }
+
+        public Rental rentalFeeCalc { get; private set; }
+
+        //method for rent calaculation. however i want to give this result of rentalfeecalc to rental class, data member cost.
+        // public Rental rentCostCalculation(){
+        //     Rental rentalFeeCalc = WaterBill + PowerBill + InternetBill + baseCost;
+        //     return rentalFeeCalc;            
+        // }
+
     }
 }

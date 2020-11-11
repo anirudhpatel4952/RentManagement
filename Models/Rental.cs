@@ -31,6 +31,8 @@ namespace rentManagement.Models
         public double Cost { get; set; }
         // public double Location { get; set; }
 
+        
+
 
     }
     

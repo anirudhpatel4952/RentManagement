@@ -21,6 +21,10 @@ namespace rentManagement.Models
         
         //trying composition
         // private Rental _rental;
+        public Customer()
+        {
+            
+        }
         public Customer(long customerId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit)
         {
             CustomerId = customerId;
