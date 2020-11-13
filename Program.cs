@@ -16,25 +16,38 @@ namespace rentManagement
         {
             Console.WriteLine("Welcome to Your Rent Management System");
             var rentManagementSystem = new RentManagementSystem();
-            Customer customer = new Customer();
+            Tenant tenant = new Tenant();
 
             bool loopBreak = true;
             while (loopBreak)
             {
-                Console.WriteLine($"\nENTER \nA: TO LIST ALL THE RENTAL APARTMENTS WITH STATUS, \nB: TO ADD A CUSTOMER,\nC: TO REMOVE A CUSTOMER,\nD: TO ASSIGN A UNIT, \nE: TO REASSIGN A UNIT, \nF: TO CHANGE THE COSTS OF THE APARTMENT, \nG: TO OPEN A COMPLAINT TICKET AT A UNIT, \nH: TO CLOSE THE COMPLAINT TICKET, \nQ: TO QUIT");
+                Console.WriteLine($"\nENTER \nA: TO LIST ALL THE RENTAL APARTMENT UNITS AND TENANTS, \nB: TO ADD A TENANT, \nC: TO REMOVE A TENANT, \nD: TO SEARCH FOR A TENANT OR A UNIT, \nE: TO ASSIGN A UNIT, \nF: TO REASSIGN A UNIT, \nG: TO CHANGE THE COSTS OF THE APARTMENT, \nH: TO OPEN A COMPLAINT TICKET AT A UNIT, \nI: TO CLOSE THE COMPLAINT TICKET, \nQ: TO QUIT");
                 var welcomeInput = Console.ReadLine().ToUpper();
 
                switch (welcomeInput)
                 {
                     case "A":
                         Console.WriteLine("Getting the list......");
+                        
+                        rentManagementSystem.PrintAllTenants();
+                        foreach (var Cx in rentManagementSystem._tenantsList)
+                        {
+                            System.Console.WriteLine($"Full name of the tenant is :{Cx.FullName} \nId is :{Cx.TenantId} \nAddress is :{Cx.Address}, {Cx.PostalCode}, {Cx.City} \nDeposit payed is: {Cx.Deposit}\n");
+                        }
+                        rentManagementSystem.PrintAllUnitsInApartn();
+                        foreach (var unit in rentManagementSystem._apartmentUnitsList)
+                        {
+                            
+                            System.Console.WriteLine($"\nApartment: {unit.Apartment} \nUnit No. :{unit.Unit} \nNumber of Rooms available are :{unit.NumberOfRoom} \nCost of this Unit is :{unit.Cost}");
+                        }
+
                         break;
 
                     case "B":
-                        System.Console.WriteLine("Adding a customer.....");
-                        System.Console.WriteLine("Please enter the following details of the Customer:");
-                        System.Console.WriteLine("Enter customerId:");
-                        var customerIdInput = Convert.ToInt64(Console.ReadLine());
+                        System.Console.WriteLine("Adding a tenant.....");
+                        System.Console.WriteLine("Please enter the following details of the Tenant:");
+                        System.Console.WriteLine("Enter tenantId:");
+                        var tenantIdInput = Convert.ToInt64(Console.ReadLine());
                         System.Console.WriteLine("Enter First Name:");
                         var firstNameInput = Console.ReadLine();
                         System.Console.WriteLine("Enter Last Name:");
@@ -49,36 +62,58 @@ namespace rentManagement
                         var idProofInput = Console.ReadLine();
                         System.Console.WriteLine("Enter Deposit Amount:");
                         var depositInput = Convert.ToDouble(Console.ReadLine());
-                        
-                        rentManagementSystem.AddACustomer(customerIdInput,firstNameInput, lastNameInput, addressInput, postalCodeInput, cityInput, idProofInput, depositInput);
+                        System.Console.WriteLine("Enter if the tenant is assigned:");
+                        var isAssignedInput = Convert.ToBoolean(Console.ReadLine());
+                        var tenantAdded = rentManagementSystem.AddATenant(tenantIdInput,firstNameInput, lastNameInput, addressInput, postalCodeInput, cityInput, idProofInput, depositInput, isAssignedInput);
                        
-                        System.Console.WriteLine("Customer added");
-                        break;
-                    case "C":
-                        System.Console.WriteLine("Deleting a customer.....");
-                        System.Console.WriteLine("Enter the customerId to delete the Customer:");
-                        var customerDelIdInput = Convert.ToInt64(Console.ReadLine());
-                        rentManagementSystem.DeleteACustomer(customerDelIdInput);
-                        System.Console.WriteLine($"Customer with Id:{customerDelIdInput} removed");
+                        System.Console.WriteLine($"Tenant with Id: {tenantAdded.TenantId} & First Name: {tenantAdded.FirstName} added");
                         break;
 
+                    case "C":
+                        System.Console.WriteLine("Deleting a tenant.....");
+                        System.Console.WriteLine("Enter the tenantId to delete the Tenant:");
+                        var tenantDelIdInput = Convert.ToInt64(Console.ReadLine());
+                        //store the below func in a variable so it becomes easier to display
+                        var tenantDeleted = rentManagementSystem.DeleteATenant(tenantDelIdInput);
+                       
+                        System.Console.WriteLine($"Tenant with Id:{tenantDeleted.TenantId} removed");
+                        break;
+                    
                     case "D":
-                        System.Console.WriteLine("Assigning a Unit.....");
+                        System.Console.WriteLine("Search for a Tenant or Unit?");
+                        var searchResponse = Console.ReadLine().ToLower();
+                        if (searchResponse == "tenant"){
+                            System.Console.WriteLine("Please enter the Tenant Id to search for the tenant");
+                            var searchTenantIdInput = Convert.ToInt32(Console.ReadLine());
+                            var searchResult = rentManagementSystem.SearchForTenants(searchTenantIdInput);
+                            System.Console.WriteLine($"\nFull name of the tenant is :{searchResult.FullName} \nId is :{searchResult.TenantId} \nAddress is :{searchResult.Address}, {searchResult.PostalCode}, {searchResult.City} \nDeposit payed is: {searchResult.Deposit}\n");
+                            //WORKING ON IT
+                        }
+                        else if (searchResponse == "unit"){
+                            System.Console.WriteLine("Please enter the Unit number to search for the unit");
+                            var searchUnitNumInput = Convert.ToInt32(Console.ReadLine());
+                            var searchResult = rentManagementSystem.SearchForUnits(searchUnitNumInput);
+                            System.Console.WriteLine($"\nApartment: {searchResult.Apartment} \nUnit No. :{searchResult.Unit} \nNumber of Rooms available are :{searchResult.NumberOfRoom} \nCost of this Unit is :{searchResult.Cost}");
+                        }
                         break;
 
                     case "E":
-                        System.Console.WriteLine("Reassigning a Unit....");
+                        System.Console.WriteLine("Assigning a Unit.....");
                         break;
 
                     case "F":
-                        System.Console.WriteLine("Changing the cost of the apartment units...");
+                        System.Console.WriteLine("Reassigning a Unit....");
                         break;
 
                     case "G":
-                        System.Console.WriteLine("Issuing a complaint ticket");
+                        System.Console.WriteLine("Changing the cost of the apartment units...");
                         break;
 
                     case "H":
+                        System.Console.WriteLine("Issuing a complaint ticket");
+                        break;
+
+                    case "I":
                         System.Console.WriteLine("Closing a resolved complaint ticket....");
                         break;
 
@@ -93,7 +128,7 @@ namespace rentManagement
                 }
             }
         }
-
         
+    
     }
 }

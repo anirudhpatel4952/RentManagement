@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace rentManagement.Models
 {
-    public class Customer
+    public class Tenant
     {
         // //Data member
-        // private long _customerId;
+        // private long _TenantId;
         // private string _firstName;
         // private string _lastName;
         // private string _address;
@@ -21,13 +21,13 @@ namespace rentManagement.Models
         
         //trying composition
         // private Rental _rental;
-        public Customer()
+        public Tenant()
         {
             
         }
-        public Customer(long customerId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit)
+        public Tenant(long tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned)
         {
-            CustomerId = customerId;
+            TenantId = tenantId;
             FirstName = firstName;
             LastName = lastName;
             Address = address;
@@ -35,19 +35,21 @@ namespace rentManagement.Models
             City = city;
             IdProof = idProof;
             Deposit = deposit;
+            IsAssigned = false;
         }
 
         //properties or access func
-        public long CustomerId { get; set; }
+        public long TenantId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullName {get {return FirstName +" "+ LastName;}}
         public string Address { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string IdProof { get; set; }
         public double Deposit { get; set; }
 
-
+        public bool IsAssigned { get; private set; }
         
 
     }

@@ -11,104 +11,136 @@ namespace rentManagement
         public RentManagementSystem()
         {
             
-            //list of customers living in first apartment
-            _customersFirstApartmentList = new List<Customer>();
+            //list of tenants living in first apartment
+            _tenantsList = new List<Tenant>();
             
             //list of units of first apartment
-            _firstApartmentList = new List<Rental>();
+            _apartmentUnitsList = new List<Rental>();
 
-            //creating the customer(CUSTOMES OBJECTS)
-            Customer customerFirstApartmentUnit1 = 
-            new Customer(400, "Jay", "Bhai", "01-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900);
+            //creating the tenant(TENANTS OBJECTS)
+            Tenant tenant1 = 
+            new Tenant(400, "Jay", "Bhai", "01-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, true);
 
-            Customer customerFirstApartmentUnit2 = 
-            new Customer(401, "Jayshree", "Ben", "02-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900);
+            Tenant tenant2 = 
+            new Tenant(401, "Jayshree", "Ben", "02-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, true);
 
-            Customer customerFirstApartmentUnit3 = 
-            new Customer(402, "Jayesh", "Kumar", "03-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900);
+            Tenant tenant3 = 
+            new Tenant(402, "Jayesh", "Kumar", "03-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, false);
 
-            Customer customerFirstApartmentUnit4 = 
-            new Customer(403, "Jaya", "Kumari", "04-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900);
+            Tenant tenant4 = 
+            new Tenant(403, "Jaya", "Kumari", "04-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, false);
             
             
             //creating the rental apartment
-            Rental firstApartment_unit1 = new Rental(4100, 01, 2, 900);
-            Rental firstApartment_unit2 = new Rental(4100, 02, 2, 900);
-            Rental firstApartment_unit3 = new Rental(4100, 03, 2, 900);
-            Rental firstApartment_unit4 = new Rental(4100, 04, 2, 900);
+            Rental unit1 = new Rental(4100, 01, 2, 900, true);
+            Rental unit2 = new Rental(4100, 02, 2, 900, false);
+            Rental unit3 = new Rental(4100, 03, 2, 900, false);
+            Rental unit4 = new Rental(4100, 04, 2, 900, false);
 
             
 
-            //an assignment of the apartment to a customer
-            Assignment assignment1 = new Assignment(4004100, firstApartment_unit1, customerFirstApartmentUnit1, true);
-            Assignment assignment2 = new Assignment(4014100, firstApartment_unit2, customerFirstApartmentUnit2, true);
-            Assignment assignment3 = new Assignment(4024100, firstApartment_unit3, customerFirstApartmentUnit3, true);
-            Assignment assignment4 = new Assignment(4034100, firstApartment_unit4, customerFirstApartmentUnit4, true);
+            //an assignment of the apartment to a tenant
+            // Assignment assignment1 = new Assignment(4004100, unit1, tenant1, true);
+            // Assignment assignment2 = new Assignment(4014100, unit2, tenant2, true);
+            // Assignment assignment3 = new Assignment(4024100, unit3, tenant3, true);
+            // Assignment assignment4 = new Assignment(4034100, unit4, tenant4, true);
 
 
-            //adding the customers in the customer list
-            _customersFirstApartmentList.Add(customerFirstApartmentUnit1);
-            _customersFirstApartmentList.Add(customerFirstApartmentUnit2);
-            _customersFirstApartmentList.Add(customerFirstApartmentUnit3);
-            _customersFirstApartmentList.Add(customerFirstApartmentUnit4);
+            //adding the tenants in the tenant list
+            _tenantsList.Add(tenant1);
+            _tenantsList.Add(tenant2);
+            _tenantsList.Add(tenant3);
+            _tenantsList.Add(tenant4);
 
 
             //adding the apartments in the apartment lists
-            _firstApartmentList.Add(firstApartment_unit1);
-            _firstApartmentList.Add(firstApartment_unit2);
-            _firstApartmentList.Add(firstApartment_unit3);
-            _firstApartmentList.Add(firstApartment_unit4);
+            _apartmentUnitsList.Add(unit1);
+            _apartmentUnitsList.Add(unit2);
+            _apartmentUnitsList.Add(unit3);
+            _apartmentUnitsList.Add(unit4);
 
-            //adding the customers to a specific apartment
-            // _firstApartment.AddRange(_customersApt4List); //not woorking since different types
         }
-        
-            //list of customers in first apartment
-            public List<Customer> _customersFirstApartmentList { get; private set; }  
+            
+            //list of tenants in the apartment
+            public List<Tenant> _tenantsList { get; private set; }  
         
 
             //list of apartments
-            private List<Rental> _firstApartmentList;
+            public List<Rental> _apartmentUnitsList {get; private set;}
         
         
         //end of constructor
 
-        //method to add a customer 
-        public Customer AddACustomer(long customerId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit){
-            if (_customersFirstApartmentList.Count <= 8){
-            var customer = new Customer(customerId, firstName, lastName, address, postalCode, city, idProof, deposit);
-            _customersFirstApartmentList.Add(customer);
-            return customer;
+        //method to add a tenant 
+        public Tenant AddATenant(long tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned){
+            if (_tenantsList.Count <= 16){
+            var tenant = new Tenant(tenantId, firstName, lastName, address, postalCode, city, idProof, deposit, isAssigned);
+            _tenantsList.Add(tenant);
+            return tenant;
             }
            else{
-                throw new Exception("Maximum only 8 units present, all the units are full");
+                throw new Exception("Maximum only 8 units present, 2 Tenants per Unit. Limit reached");
             }
             
         }
 
-        //method to delete a customer
+        //method to delete a tenant
 
-        public Customer DeleteACustomer(long customerIdInput){
+        public Tenant DeleteATenant(long tenantIdInput){
              
-            for (var i = 0; i < _customersFirstApartmentList.Count; i++) {
-
-                if (customerIdInput == _customersFirstApartmentList[i].CustomerId)
+            for (int i = 0; i < _tenantsList.Count; i++) {
+                var tenant = _tenantsList[i];
+                if (tenantIdInput == tenant.TenantId)
                 {
-                   var delCustomer = _customersFirstApartmentList;
-                   delCustomer.RemoveAt(i);
-                //    System.Console.WriteLine("cxremoved");
-                   break;
+                    var delTenant = _tenantsList;
+                    delTenant.RemoveAt(i);
+                    return tenant;
                     
                 }
-                else {
-                    throw new Exception("No Customer found, try a different Id");
+               
+            }
+            return null;   
+        }
+
+        //method to print all the tenants
+        public List<Tenant> PrintAllTenants(){
+            return _tenantsList;
+        }
+
+        //method to print all the units in the apartment
+        public List<Rental> PrintAllUnitsInApartn(){
+            return _apartmentUnitsList;
+        }
+        
+        //method to check if the unit is assigned to tenant
+        public Assignment AssignmentChecker(){
+            return null;
+        }
+        
+        //search functionality to search for a tenant
+        public Tenant SearchForTenants(long tenantToSearchById){
+            for (int i = 0; i < _tenantsList.Count; i++) {
+                var tenant = _tenantsList[i];
+                if (tenantToSearchById == tenant.TenantId)
+                {
+                    return tenant;
                 }
-                      
-            
+                
             }
             return null;
-            // System.Console.WriteLine("Customer Deleted");
-            
         }
+
+        //search functionality to search for a unit
+        public Rental SearchForUnits(int unitToSearchByUnitNum) {
+            for (int i = 0; i < _apartmentUnitsList.Count;i++) {
+                var unit = _apartmentUnitsList[i];
+                if (unitToSearchByUnitNum == unit.Unit){
+                    return unit;
+                }
+                
+            }
+            return null;
+        }
+
     }
 }

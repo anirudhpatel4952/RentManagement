@@ -8,29 +8,31 @@ namespace rentManagement.Models
 {
     public class Rental
     {
-        public Rental(int apartmentNum, int houseNum, double numOfRooms, double cost)
+        public Rental(int apartmentNum, int unitNum, double numOfRooms, double cost, bool isAssigned)
         {
             this.Apartment = apartmentNum;
-            this.House = houseNum;
+            this.Unit = unitNum;
             this.NumberOfRoom = numOfRooms;
             this.Cost = cost;
+            this.IsAssigned = false;
         }
         // Data member
-        //trying composition
-        // private Customer customer;
+        
         private int apartment;
-        private int house; 
+        private int unit; 
         private double numberofroom;
         private double cost;
-        private double location;
+        
 
         //properties
         public int Apartment { get; set; }
-        public int House { get; set; }
+        public int Unit { get; set; }
         public double NumberOfRoom { get; set; }
         public double Cost { get; set; }
-        // public double Location { get; set; }
+        
+        public Tenant tenant { get; set; }  
 
+        public bool IsAssigned { get; private set; }   
         
 
 

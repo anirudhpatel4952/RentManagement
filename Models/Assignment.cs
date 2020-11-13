@@ -4,17 +4,17 @@ namespace rentManagement.Models
 {
     public class Assignment
     {
-        public Assignment(long assignId, Rental rental, Customer customer, bool isAssigned) 
+        public Assignment(Rental rental, Tenant tenant) 
         {
-            this.AssignId = assignId;
-            this.rental = rental;
-            this.customer = customer;
-            this.IsAssigned = isAssigned;
+            this.AssignId = Guid.NewGuid();
+            this.Rental = rental;
+            this.Tenant = tenant;
+            this.IsAssigned = false;
                
         }
-        public long AssignId { get; set; }
-        public Rental rental{ get; set; }
-        public Customer customer { get; set; }
+        public Guid AssignId { get; }
+        public Rental Rental{ get; private set; }
+        public Tenant Tenant { get; private set; }
         public bool IsAssigned { get; set; }
     }
 }
