@@ -1,29 +1,37 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+
 using rentManagement.Models;
 
 namespace rentManagement.Storage
 {
-    public class TenantStorageList : IStoreTenants
+    public class TenantStorageList
     {
-        public List<Tenant> _tenantsList { get; private set; }
+        private List<Tenant> _tenantsList;
         public TenantStorageList()
         {
             _tenantsList = new List<Tenant>();
         }
-        public Tenant Create(long tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned){
-            if (_tenantsList.Count <= 16){
+        public void Create(Tenant tenantToCreate) {
+            _tenantsList.Add(tenantToCreate);
+            
+        }
+        public Tenant CreateATenant(long tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned){
+            if (_tenantsList.Count <= 8){
             var tenant = new Tenant(tenantId, firstName, lastName, address, postalCode, city, idProof, deposit, isAssigned);
             _tenantsList.Add(tenant);
             return tenant;
             }
            else{
-                throw new Exception("Maximum only 8 units present, 2 Tenants per Unit. Limit reached");
+                throw new Exception("Maximum only 8 units equal to 8 Tenants. Limit reached");
             }
             
         }
 
-        public Tenant RemoveById(long tenantIdInput){
+        //method to delete a tenant
+
+        public Tenant Remove(long tenantIdInput){
              
             for (int i = 0; i < _tenantsList.Count; i++) {
                 var tenant = _tenantsList[i];
@@ -38,8 +46,8 @@ namespace rentManagement.Storage
             }
             return null;   
         }
-
-        public List<Tenant> DisplayAllTenantById(){
+        
+        public List<Tenant> GetAll(){
             return _tenantsList;
         }
 

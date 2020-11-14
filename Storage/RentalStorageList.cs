@@ -4,18 +4,21 @@ using rentManagement.Models;
 
 namespace rentManagement.Storage
 {
-    public class RentalStorageList : IStoreRentals
+    public class RentalStorageList
     {
-        public List<Rental> _apartmentUnitsList {get; private set;}
+        private List<Rental> _apartmentUnitsList;
         public RentalStorageList()
         {
             _apartmentUnitsList = new List<Rental>();
         }
-        public List<Rental> GetRentals(){
+        public void Create(Rental unitToCreate){
+            _apartmentUnitsList.Add(unitToCreate);
+        }
+        public List<Rental> GetAll(){
             return _apartmentUnitsList;
         }
 
-        public Rental DisplayAllRentalByUnitNum(int unitToSearchByUnitNum) {
+        public Rental GetByUnitNum(int unitToSearchByUnitNum) {
             for (int i = 0; i < _apartmentUnitsList.Count;i++) {
                 var unit = _apartmentUnitsList[i];
                 if (unitToSearchByUnitNum == unit.Unit){

@@ -34,7 +34,16 @@ namespace rentManagement.Models
 
         public bool IsAssigned { get; set; }   
         
-
+        public override string ToString()
+        {
+            string details = "----- Rental Apartment -----\n";
+            details += $"Apartment number : {Apartment}\n";
+            details += $"Unit : {Unit.ToString()}\n";
+            details += $"Number of Rooms : {NumberOfRoom}\n";
+            details += $"Cost of the Unit : {Cost}\n";
+            details += $"Is the Unit assigned : {IsAssigned}\n"; 
+            return details;
+        }
 
     }
     

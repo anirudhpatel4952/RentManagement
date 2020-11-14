@@ -13,7 +13,7 @@ namespace rentManagement.Storage
         Tenant RemoveById(long tenantIdInput);
         
 
-        List<Tenant> DisplayAllTenantById();
+        List<Tenant> GetAll();
 
         Tenant GetById(long tenantToSearchById);
         
