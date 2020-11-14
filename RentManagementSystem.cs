@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using rentManagement.Models;
 using System.Linq;
+using rentManagement.Storage;
+
+
 namespace rentManagement
 {
     public class RentManagementSystem
     {
-        //functions will come here
-        public RentManagementSystem()
+        
+        public RentManagementSystem(
+        IStoreTenants storeTenantsArg,
+        IStoreRentals storeRentalsArg)
         {
             
             //list of tenants living in first apartment
@@ -19,10 +24,10 @@ namespace rentManagement
 
             //creating the tenant(TENANTS OBJECTS)
             Tenant tenant1 = 
-            new Tenant(400, "Jay", "Bhai", "01-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, true);
+            new Tenant(400, "Jay", "Bhai", "01-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, false);
 
             Tenant tenant2 = 
-            new Tenant(401, "Jayshree", "Ben", "02-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, true);
+            new Tenant(401, "Jayshree", "Ben", "02-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, false);
 
             Tenant tenant3 = 
             new Tenant(402, "Jayesh", "Kumar", "03-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, false);
@@ -32,19 +37,12 @@ namespace rentManagement
             
             
             //creating the rental apartment
-            Rental unit1 = new Rental(4100, 01, 2, 900, true);
+            Rental unit1 = new Rental(4100, 01, 2, 900, false);
             Rental unit2 = new Rental(4100, 02, 2, 900, false);
             Rental unit3 = new Rental(4100, 03, 2, 900, false);
             Rental unit4 = new Rental(4100, 04, 2, 900, false);
 
-            
-
-            //an assignment of the apartment to a tenant
-            // Assignment assignment1 = new Assignment(4004100, unit1, tenant1, true);
-            // Assignment assignment2 = new Assignment(4014100, unit2, tenant2, true);
-            // Assignment assignment3 = new Assignment(4024100, unit3, tenant3, true);
-            // Assignment assignment4 = new Assignment(4034100, unit4, tenant4, true);
-
+            Assignment assignment = new Assignment();
 
             //adding the tenants in the tenant list
             _tenantsList.Add(tenant1);
@@ -60,16 +58,18 @@ namespace rentManagement
             _apartmentUnitsList.Add(unit4);
 
         }
-            
-            //list of tenants in the apartment
-            public List<Tenant> _tenantsList { get; private set; }  
+        //end of constructor
+
+        //list of tenants in the apartment
+        public List<Tenant> _tenantsList { get; private set; }  
+        private TenantStorageList tenantStorageList;
         
 
-            //list of apartments
-            public List<Rental> _apartmentUnitsList {get; private set;}
+        //list of apartments
+        public List<Rental> _apartmentUnitsList {get; private set;}
+        private RentalStorageList rentalStorageList;
         
         
-        //end of constructor
 
         //method to add a tenant 
         public Tenant AddATenant(long tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned){
@@ -113,8 +113,40 @@ namespace rentManagement
         }
         
         //method to check if the unit is assigned to tenant
-        public Assignment AssignmentChecker(){
-            return null;
+        public bool UnitAssigner(long tenantIdInput, int unitNumInput)
+        {
+            Assignment assignment = new Assignment();
+            var assignmentComplete = assignment.IsAssigned = false;
+            for (int i = 0; i < _tenantsList.Count; i++)
+            {
+                Tenant tenant = _tenantsList[i];
+                if (tenantIdInput == tenant.TenantId && tenant.IsAssigned == false) {
+
+                    for (int i1 = 0; i1 < _apartmentUnitsList.Count; i1++)
+                    {
+                        Rental unit = _apartmentUnitsList[i1];
+                        if (unitNumInput == unit.Unit && unit.IsAssigned == false){
+                            var tenantAssigned = tenant.IsAssigned = true;
+                            var unitAssigned = unit.IsAssigned = true;
+                        
+                            assignmentComplete = true;
+                            return assignmentComplete;
+                    }
+                        else
+                            {
+                                continue;
+                            }
+                    
+                    }
+                
+                }
+                else
+                {
+                    continue;
+                }
+            
+            }
+            return assignmentComplete;
         }
         
         //search functionality to search for a tenant

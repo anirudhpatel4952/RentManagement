@@ -49,7 +49,8 @@ namespace rentManagement.Models
         public string IdProof { get; set; }
         public double Deposit { get; set; }
 
-        public bool IsAssigned { get; private set; }
+        public bool IsAssigned { get; set;}
+        public Rental rental { get; set; }
         
 
     }

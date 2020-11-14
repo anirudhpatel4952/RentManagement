@@ -25,14 +25,14 @@ namespace rentManagement.Models
         
 
         //properties
-        public int Apartment { get; set; }
+        public int Apartment { get; private set; }
         public int Unit { get; set; }
-        public double NumberOfRoom { get; set; }
-        public double Cost { get; set; }
+        public double NumberOfRoom { get; private set; }
+        public double Cost { get; private set; }
         
         public Tenant tenant { get; set; }  
 
-        public bool IsAssigned { get; private set; }   
+        public bool IsAssigned { get; set; }   
         
 
 

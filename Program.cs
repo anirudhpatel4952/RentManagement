@@ -17,11 +17,12 @@ namespace rentManagement
             Console.WriteLine("Welcome to Your Rent Management System");
             var rentManagementSystem = new RentManagementSystem();
             Tenant tenant = new Tenant();
+            Assignment assignment = new Assignment();
 
             bool loopBreak = true;
             while (loopBreak)
             {
-                Console.WriteLine($"\nENTER \nA: TO LIST ALL THE RENTAL APARTMENT UNITS AND TENANTS, \nB: TO ADD A TENANT, \nC: TO REMOVE A TENANT, \nD: TO SEARCH FOR A TENANT OR A UNIT, \nE: TO ASSIGN A UNIT, \nF: TO REASSIGN A UNIT, \nG: TO CHANGE THE COSTS OF THE APARTMENT, \nH: TO OPEN A COMPLAINT TICKET AT A UNIT, \nI: TO CLOSE THE COMPLAINT TICKET, \nQ: TO QUIT");
+                Console.WriteLine($"\nENTER \nA: TO LIST ALL THE RENTAL APARTMENT UNITS AND TENANTS, \nB: TO ADD A TENANT, \nC: TO REMOVE A TENANT, \nD: TO SEARCH FOR A TENANT OR A UNIT, \nE: TO ASSIGN A UNIT, \nQ: TO QUIT");
                 var welcomeInput = Console.ReadLine().ToUpper();
 
                switch (welcomeInput)
@@ -99,22 +100,21 @@ namespace rentManagement
 
                     case "E":
                         System.Console.WriteLine("Assigning a Unit.....");
-                        break;
-
-                    case "F":
-                        System.Console.WriteLine("Reassigning a Unit....");
-                        break;
-
-                    case "G":
-                        System.Console.WriteLine("Changing the cost of the apartment units...");
-                        break;
-
-                    case "H":
-                        System.Console.WriteLine("Issuing a complaint ticket");
-                        break;
-
-                    case "I":
-                        System.Console.WriteLine("Closing a resolved complaint ticket....");
+                        System.Console.WriteLine("Please enter a unit you want to assign:");
+                        var unitNumInput = Convert.ToInt32(Console.ReadLine());
+                        System.Console.WriteLine("Please enter a Tenant Id for the tenant to get a unit assigned:");
+                        var tenantIdToassignInput = Convert.ToInt64(Console.ReadLine());
+                        var assignmentComplete = rentManagementSystem.UnitAssigner(tenantIdToassignInput, unitNumInput);
+                        
+                        if (assignmentComplete == true){
+                            Guid assignmentId = assignment.AssignId;
+                            var assignmentguid = System.Guid.NewGuid();
+                            System.Console.WriteLine($"Assignment Completed. The Tenant with Id: {tenantIdToassignInput} is assigned the unit: {unitNumInput}. The Assignment Id for this contract is {assignmentguid}. ");
+                            
+                        }
+                        else{
+                            System.Console.WriteLine($"Either Tenant Id or Unit number not available, try again");
+                        }
                         break;
 
                     case "Q":
