@@ -6,7 +6,7 @@ using rentManagement.Models;
 
 namespace rentManagement.Storage
 {
-    public class TenantStorageList
+    public class TenantStorageList : IStoreTenants
     {
         private List<Tenant> _tenantsList;
         public TenantStorageList()

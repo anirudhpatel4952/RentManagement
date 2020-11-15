@@ -8,11 +8,13 @@ namespace rentManagement.Storage
     public interface IStoreTenants
     {
          
-        Tenant Create(long tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned);
+        void Create(Tenant tenantToCreate);
+        Tenant CreateATenant(long tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned);
 
-        Tenant RemoveById(long tenantIdInput);
+        //method to delete a tenant
+
+        Tenant Remove(long tenantIdInput);
         
-
         List<Tenant> GetAll();
 
         Tenant GetById(long tenantToSearchById);

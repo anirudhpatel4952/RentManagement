@@ -5,7 +5,7 @@ using rentManagement.Models;
 
 namespace rentManagement.Storage
 {
-    public class AssignStorageList
+    public class AssignStorageList : IStoreAssignmentList
     {
         private List<Assignment> _innerList;
 

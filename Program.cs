@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using rentManagement.Models;
-
+using rentManagement.Storage;
 
 
 namespace rentManagement
@@ -14,24 +14,48 @@ namespace rentManagement
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Your Rent Management System");
-            var rentManagementSystem = new RentManagementSystem();
-            Tenant tenant = new Tenant();
-            Assignment assignment = new Assignment();
+            var tenantStorageSystem = new TenantStorageList();  //<= just change the storage system type here to whatever storage system needs to be used & nothing would affected
+            var rentalStorageSystem = new RentalStorageList();
+            var assignmentStorageSystem = new AssignStorageList();
 
+            //Initialize the StorageSystems and inject it into the rentManagementSystem constructor
+            var rentManagementSystem = new RentManagementSystem(rentalStorageSystem, tenantStorageSystem, assignmentStorageSystem); //<= dependency injection
+            // Tenant tenant = new Tenant();
+            // Assignment assignment = new Assignment();
+            System.Console.WriteLine("--------------------------------------");
+            System.Console.WriteLine("Welcome to Your Rent Management System");
+            System.Console.WriteLine("--------------------------------------");
             bool loopBreak = true;
             while (loopBreak)
             {
-                Console.WriteLine($"\nENTER \nA: TO LIST ALL THE RENTAL APARTMENT UNITS AND TENANTS, \nB: TO ADD A TENANT, \nC: TO REMOVE A TENANT, \nD: TO SEARCH FOR A TENANT OR A UNIT, \nE: TO ASSIGN A UNIT, \nQ: TO QUIT");
+                
+                System.Console.WriteLine("\nPlease select an option:\n" +
+                    "- A: TO LIST ALL THE RENTAL APARTMENT UNITS, TENANTS AND ASSIGNMENTS\n" + 
+                    "- B: TO ADD A TENANT\n" +
+                    "- C: TO REMOVE A TENANT\n" +
+                    "- D: TO SEARCH FOR A TENANT OR A UNIT\n" +
+                    "- E: TO ASSIGN A UNIT\n" +
+                    "- Q: TO QUIT\n"
+                    );
                 var welcomeInput = Console.ReadLine().ToUpper();
-
-               switch (welcomeInput)
+                switch (welcomeInput)
                 {
                     case "A":
-                        Console.WriteLine("Getting the list......");
-                        
-                        rentManagementSystem.PrintAllTenants();
-                        foreach (var Cx in rentManagementSystem._tenantsList)
+                        try{
+                        System.Console.WriteLine("What would you like to check the list of?");
+                        System.Console.WriteLine("\n- A: TO LIST ALL THE RENTAL APARTMENT UNITS\n" + 
+                                                "- B: TO LIST ALL THE TENANTS\n" +
+                                                "- C: TO LIST ALL THE RENTAL ASSIGNMENTS\n");
+                        var listResponse = Console.ReadLine().ToUpper();
+                        var listResponseA = rentManagementSystem.PrintAllUnitsInApartn();
+                        foreach (var unit in listResponseA)
+                        {
+                            System.Console.WriteLine(listResponseA.ToString());
+                        }
+                        System.Console.WriteLine("Getting the list......");
+                        }
+                        var 
+                        foreach (var Cx in )
                         {
                             System.Console.WriteLine($"Full name of the tenant is :{Cx.FullName} \nId is :{Cx.TenantId} \nAddress is :{Cx.Address}, {Cx.PostalCode}, {Cx.City} \nDeposit payed is: {Cx.Deposit}\n");
                         }

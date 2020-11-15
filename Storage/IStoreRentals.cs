@@ -7,10 +7,10 @@ namespace rentManagement.Storage
     public interface IStoreRentals
     {
         
-        List<Rental> GetRentals();
-       
+        void Create(Rental unitToCreate);
+        List<Rental> GetAll();
 
-        Rental DisplayAllRentalByUnitNum(int unitToSearchByUnitNum);
+        Rental GetByUnitNum(int unitToSearchByUnitNum);
 
     }
 }
