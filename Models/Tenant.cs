@@ -59,7 +59,7 @@ namespace rentManagement.Models
             details += $"Full Name : {FullName.ToString()}\n";
             details += $"Full Address : {Address}, {PostalCode}, {City}\n";
             details += $"Id Proof provided : {IdProof}\n";
-            details += $"Deposit Collected : {Deposit}";
+            details += $"Deposit Collected : {Deposit}\n";
             details += $"Is the Unit assigned : {IsAssigned}\n"; 
             return details;
         }

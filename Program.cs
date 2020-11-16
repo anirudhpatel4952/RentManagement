@@ -41,34 +41,78 @@ namespace rentManagement
                 switch (welcomeInput)
                 {
                     case "A":
-                        try{
+                    var loopABreak = true;
+                        while(loopABreak) {
                         System.Console.WriteLine("What would you like to check the list of?");
                         System.Console.WriteLine("\n- A: TO LIST ALL THE RENTAL APARTMENT UNITS\n" + 
                                                 "- B: TO LIST ALL THE TENANTS\n" +
-                                                "- C: TO LIST ALL THE RENTAL ASSIGNMENTS\n");
+                                                "- C: TO LIST ALL THE RENTAL ASSIGNMENTS\n" +
+                                                "- R: TO GO BACK TO THE MAIN OPTIONS");
                         var listResponse = Console.ReadLine().ToUpper();
-                        var listResponseA = rentManagementSystem.PrintAllUnitsInApartn();
-                        foreach (var unit in listResponseA)
-                        {
-                            System.Console.WriteLine(listResponseA.ToString());
-                        }
-                        System.Console.WriteLine("Getting the list......");
-                        }
-                        var 
-                        foreach (var Cx in )
-                        {
-                            System.Console.WriteLine($"Full name of the tenant is :{Cx.FullName} \nId is :{Cx.TenantId} \nAddress is :{Cx.Address}, {Cx.PostalCode}, {Cx.City} \nDeposit payed is: {Cx.Deposit}\n");
-                        }
-                        rentManagementSystem.PrintAllUnitsInApartn();
-                        foreach (var unit in rentManagementSystem._apartmentUnitsList)
-                        {
+                        
                             
-                            System.Console.WriteLine($"\nApartment: {unit.Apartment} \nUnit No. :{unit.Unit} \nNumber of Rooms available are :{unit.NumberOfRoom} \nCost of this Unit is :{unit.Cost}");
+                        if (listResponse == "A"){
+                            try{
+                                var listResponseA = rentManagementSystem.PrintAllUnitsInApartn();
+                                foreach (var unit in listResponseA)
+                                {
+                                    System.Console.WriteLine(unit.ToString());
+                                }
+                            }
+                        
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
                         }
-
+                        
+                        if (listResponse == "B"){
+                            try{
+                                var listResponseB = rentManagementSystem.PrintAllTenants();
+                                foreach (var unit in listResponseB)
+                                {
+                                    System.Console.WriteLine(unit.ToString());
+                                }
+                            }
+                        
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
+                        }
+                            
+                        if (listResponse == "C"){
+                            try{
+                                var listResponseC = rentManagementSystem.PrintAllAssignments();
+                                foreach (var assign in listResponseC)
+                                {
+                                    System.Console.WriteLine(assign.ToString());
+                                    
+                                }
+                            }
+                        
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
+                        }
+                        if (listResponse == "R"){
+                            try
+                            {
+                                loopABreak = false;
+                            }
+                            catch (Exception e)
+                            {
+                                System.Console.WriteLine(e.Message);
+                            }
+                            
+                        }
+                        }
                         break;
-
+                        
                     case "B":
+                    try
+                    {
                         System.Console.WriteLine("Adding a tenant.....");
                         System.Console.WriteLine("Please enter the following details of the Tenant:");
                         System.Console.WriteLine("Enter tenantId:");
@@ -92,53 +136,109 @@ namespace rentManagement
                         var tenantAdded = rentManagementSystem.AddATenant(tenantIdInput,firstNameInput, lastNameInput, addressInput, postalCodeInput, cityInput, idProofInput, depositInput, isAssignedInput);
                        
                         System.Console.WriteLine($"Tenant with Id: {tenantAdded.TenantId} & First Name: {tenantAdded.FirstName} added");
+                    }
+                    catch (Exception e)
+                    {
+                        
+                        System.Console.WriteLine(e.Message);
+                    }
+                       
                         break;
 
                     case "C":
+                    try
+                    {
                         System.Console.WriteLine("Deleting a tenant.....");
                         System.Console.WriteLine("Enter the tenantId to delete the Tenant:");
                         var tenantDelIdInput = Convert.ToInt64(Console.ReadLine());
-                        //store the below func in a variable so it becomes easier to display
                         var tenantDeleted = rentManagementSystem.DeleteATenant(tenantDelIdInput);
                        
                         System.Console.WriteLine($"Tenant with Id:{tenantDeleted.TenantId} removed");
-                        break;
+                         
+                    }
+                    catch (Exception e)
+                    {
+                        System.Console.WriteLine(e.Message);
+                    }
+                        break;   
                     
                     case "D":
                         System.Console.WriteLine("Search for a Tenant or Unit?");
                         var searchResponse = Console.ReadLine().ToLower();
                         if (searchResponse == "tenant"){
-                            System.Console.WriteLine("Please enter the Tenant Id to search for the tenant");
-                            var searchTenantIdInput = Convert.ToInt32(Console.ReadLine());
-                            var searchResult = rentManagementSystem.SearchForTenants(searchTenantIdInput);
-                            System.Console.WriteLine($"\nFull name of the tenant is :{searchResult.FullName} \nId is :{searchResult.TenantId} \nAddress is :{searchResult.Address}, {searchResult.PostalCode}, {searchResult.City} \nDeposit payed is: {searchResult.Deposit}\n");
-                            //WORKING ON IT
+                            try
+                            {
+                                System.Console.WriteLine("Please enter the Tenant Id to search for the tenant");
+                                var searchTenantIdInput = Convert.ToInt32(Console.ReadLine());
+                                var searchResult = rentManagementSystem.SearchForTenants(searchTenantIdInput);
+                                
+                                System.Console.WriteLine(searchResult.ToString());
+                                
+                            }
+                            catch (Exception e)
+                            {
+                                System.Console.WriteLine(e.Message);
+                            }
+                             
                         }
                         else if (searchResponse == "unit"){
-                            System.Console.WriteLine("Please enter the Unit number to search for the unit");
-                            var searchUnitNumInput = Convert.ToInt32(Console.ReadLine());
-                            var searchResult = rentManagementSystem.SearchForUnits(searchUnitNumInput);
-                            System.Console.WriteLine($"\nApartment: {searchResult.Apartment} \nUnit No. :{searchResult.Unit} \nNumber of Rooms available are :{searchResult.NumberOfRoom} \nCost of this Unit is :{searchResult.Cost}");
-                        }
+                            try
+                            {
+                                System.Console.WriteLine("Please enter the Unit number to search for the unit");
+                                var searchUnitNumInput = Convert.ToInt32(Console.ReadLine());
+                                var searchResult = rentManagementSystem.SearchForUnits(searchUnitNumInput);
+                                System.Console.WriteLine(searchResult.ToString());
+                         
+                            }
+                            catch (Exception e)
+                            {
+                                System.Console.WriteLine(e.Message);
+                            }
+                        }   
                         break;
 
                     case "E":
                         System.Console.WriteLine("Assigning a Unit.....");
                         System.Console.WriteLine("Please enter a unit you want to assign:");
                         var unitNumInput = Convert.ToInt32(Console.ReadLine());
-                        System.Console.WriteLine("Please enter a Tenant Id for the tenant to get a unit assigned:");
+                        try
+                        {
+                            System.Console.WriteLine("Please enter a Tenant Id for the tenant to get a unit assigned:");
+                        }
+                        catch (Exception e)
+                        {
+                            System.Console.WriteLine(e.Message);
+                        }
                         var tenantIdToassignInput = Convert.ToInt64(Console.ReadLine());
-                        var assignmentComplete = rentManagementSystem.UnitAssigner(tenantIdToassignInput, unitNumInput);
+                        try
+                        {
+                            var assignmentComplete = rentManagementSystem.UnitAssigner(tenantIdToassignInput, unitNumInput);
+                        }
+                        catch (Exception e)
+                        {
+                            System.Console.WriteLine(e.Message);
+                        }
+                        var unitSearch = rentManagementSystem.SearchForUnits(unitNumInput);
+                        var tenantSearch = rentManagementSystem.SearchForTenants(tenantIdToassignInput);
                         
-                        if (assignmentComplete == true){
-                            Guid assignmentId = assignment.AssignId;
-                            var assignmentguid = System.Guid.NewGuid();
-                            System.Console.WriteLine($"Assignment Completed. The Tenant with Id: {tenantIdToassignInput} is assigned the unit: {unitNumInput}. The Assignment Id for this contract is {assignmentguid}. ");
+                        if (unitSearch.IsAssigned == true && tenantSearch.IsAssigned == true) {
+                            
+                            try
+                            {
+                                System.Console.WriteLine($"Assignment Completed. The Tenant with Id: {tenantIdToassignInput} is assigned the unit: {unitNumInput}.");
+                            }
+                            catch (Exception e)
+                            {
+                                System.Console.WriteLine(e.Message);
+                            }
+                            
                             
                         }
                         else{
                             System.Console.WriteLine($"Either Tenant Id or Unit number not available, try again");
                         }
+                        
+                        
                         break;
 
                     case "Q":
