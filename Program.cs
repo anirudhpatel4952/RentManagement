@@ -43,7 +43,7 @@ namespace rentManagement
                     case "A":
                     var loopABreak = true;
                         while(loopABreak) {
-                        System.Console.WriteLine("What would you like to check the list of?");
+                        System.Console.WriteLine("\nWhat would you like to check the list of?");
                         System.Console.WriteLine("\n- A: TO LIST ALL THE RENTAL APARTMENT UNITS\n" + 
                                                 "- B: TO LIST ALL THE TENANTS\n" +
                                                 "- C: TO LIST ALL THE RENTAL ASSIGNMENTS\n" +
@@ -56,7 +56,7 @@ namespace rentManagement
                                 var listResponseA = rentManagementSystem.PrintAllUnitsInApartn();
                                 foreach (var unit in listResponseA)
                                 {
-                                    System.Console.WriteLine(unit.ToString());
+                                    System.Console.WriteLine($"\n{unit.ToString()}");
                                 }
                             }
                         
@@ -71,7 +71,7 @@ namespace rentManagement
                                 var listResponseB = rentManagementSystem.PrintAllTenants();
                                 foreach (var unit in listResponseB)
                                 {
-                                    System.Console.WriteLine(unit.ToString());
+                                    System.Console.WriteLine($"\n{unit.ToString()}");
                                 }
                             }
                         
@@ -86,7 +86,7 @@ namespace rentManagement
                                 var listResponseC = rentManagementSystem.PrintAllAssignments();
                                 foreach (var assign in listResponseC)
                                 {
-                                    System.Console.WriteLine(assign.ToString());
+                                    System.Console.WriteLine($"\n{assign.ToString()}");
                                     
                                 }
                             }
@@ -106,6 +106,9 @@ namespace rentManagement
                                 System.Console.WriteLine(e.Message);
                             }
                             
+                        }
+                        else {
+                            System.Console.WriteLine("Please enter a valid input");
                         }
                         }
                         break;
@@ -135,26 +138,22 @@ namespace rentManagement
                         var isAssignedInput = Convert.ToBoolean(Console.ReadLine());
                         var tenantAdded = rentManagementSystem.AddATenant(tenantIdInput,firstNameInput, lastNameInput, addressInput, postalCodeInput, cityInput, idProofInput, depositInput, isAssignedInput);
                        
-                        System.Console.WriteLine($"Tenant with Id: {tenantAdded.TenantId} & First Name: {tenantAdded.FirstName} added");
+                        System.Console.WriteLine($"\nTenant with Id: {tenantAdded.TenantId} & First Name: {tenantAdded.FirstName} added");
                     }
                     catch (Exception e)
                     {
-                        
                         System.Console.WriteLine(e.Message);
                     }
-                       
                         break;
 
                     case "C":
                     try
                     {
-                        System.Console.WriteLine("Deleting a tenant.....");
                         System.Console.WriteLine("Enter the tenantId to delete the Tenant:");
                         var tenantDelIdInput = Convert.ToInt64(Console.ReadLine());
                         var tenantDeleted = rentManagementSystem.DeleteATenant(tenantDelIdInput);
-                       
-                        System.Console.WriteLine($"Tenant with Id:{tenantDeleted.TenantId} removed");
-                         
+                        System.Console.WriteLine("Deleting a tenant.....");
+                        System.Console.WriteLine($"Tenant with Id:{tenantDeleted.TenantId} removed"); 
                     }
                     catch (Exception e)
                     {
